@@ -28,11 +28,11 @@ message GetAccountsRequest {
 }
 
 message GetAccountsResponse {
-  repeated Account account = 1;
+  repeated Account accounts = 1;
 }
 
 service AccountService {
   rpc PostAccount (PostAccountRequst) returns (PostAccountResponse) {}
   rpc GetAccount (GetAccountRequest) returns (GetAccountResponse) {}
-  rpc PostAccounts (GetAccountsRequest) returns (GetAccountsResponse) {}
+  rpc GetAccounts (GetAccountsRequest) returns (GetAccountsResponse) {}
 }
