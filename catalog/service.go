@@ -43,17 +43,23 @@ func (s *catalogService) PostProduct(ctx interface{}, name, description string, 
 }
 
 func (s *catalogService) GetProduct(ctx interface{}, id string) (*Product, error) {
-	panic("implement me")
+	return s.repository.GetProductByID(ctx, id)
 }
 
 func (s *catalogService) GetProducts(ctx interface{}, skip, take uint64) ([]Product, error) {
-	panic("implement me")
+	if take > 100 || (skip == 0 && take == 0) {
+		take = 100
+	}
+	return s.repository.ListProducts(ctx, skip, take)
 }
 
 func (s *catalogService) GetProductsByIDs(ctx interface{}, ids []string) ([]Product, error) {
-	panic("implement me")
+	return s.repository.ListProductsWithIDs(ctx, ids)
 }
 
 func (s *catalogService) SearchProducts(ctx interface{}, query string, skip, take uint64) ([]Product, error) {
-	panic("implement me")
+	if take > 100 || (skip == 0 && take == 0) {
+		take = 100
+	}
+	return s.repository.SearchProducts(ctx, query, skip, take)
 }
