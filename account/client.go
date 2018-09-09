@@ -12,6 +12,10 @@ type Client struct {
 	service pb.AccountServiceClient
 }
 
+func (c *Client) Close {
+	c.conn.Close()
+}
+
 func (c *Client) PostAccount(ctx context.Context, name string) (*Account, error) {
 	r, err := c.service.PostAccount(
 		ctx, &pb.PostAccountRequst{Name: name},
