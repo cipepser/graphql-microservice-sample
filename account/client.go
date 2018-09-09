@@ -12,7 +12,7 @@ type Client struct {
 	service pb.AccountServiceClient
 }
 
-func (c *Client) Close {
+func (c *Client) Close() {
 	c.conn.Close()
 }
 
