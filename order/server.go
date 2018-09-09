@@ -106,7 +106,7 @@ func (s *grpcServer) PostOrder(ctx context2.Context, r *pb.PostOderRequest) (*pb
 		TotalPrice: order.TotalPrice,
 		Products:   []*pb.Order_OrderProduct{},
 	}
-	orderProto.CreateAt, _ = order.CreatedAt.MarshalBinary()
+	orderProto.createdAt, _ = order.CreatedAt.MarshalBinary()
 	for _, p := range order.Products {
 		orderProto.Products = append(orderProto.Products, &pb.Order_OrderProduct{
 			Id:          p.ID,
@@ -156,7 +156,7 @@ func (s *grpcServer) GetOrdersForAccount(ctx context2.Context, r *pb.GetOrdersFo
 			TotalPrice: o.TotalPrice,
 			Products:   []*pb.Order_OrderProduct{},
 		}
-		op.CreateAt, _ = o.CreatedAt.MarshalBinary()
+		op.createdAt, _ = o.CreatedAt.MarshalBinary()
 
 		// decorate orders with products
 		for _, product := range o.Products {

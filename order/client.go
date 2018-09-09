@@ -47,7 +47,7 @@ func (c *Client) PostOrder(ctx context.Context, accountID string, products []Ord
 	// create response order
 	newOrder := r.Order
 	newOrderCreatedAt := time.Time{}
-	newOrderCreatedAt.UnmarshalBinary(newOrder.CreateAt)
+	newOrderCreatedAt.UnmarshalBinary(newOrder.createdAt)
 
 	return &Order{
 		ID:         newOrder.Id,
@@ -74,7 +74,7 @@ func (c *Client) GetOrdersForAccount(ctx context.Context, accountID string) ([]O
 			AccountID:  orderProto.AccountId,
 		}
 		newOrder.CreatedAt = time.Time{}
-		newOrder.CreatedAt.UnmarshalBinary(orderProto.CreateAt)
+		newOrder.CreatedAt.UnmarshalBinary(orderProto.createdAt)
 
 		products := []OrderedProduct{}
 		for _, p := range orderProto.Products {
