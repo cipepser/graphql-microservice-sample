@@ -33,7 +33,7 @@ func (r *postgressRepository) Close() {
 	r.db.Close()
 }
 
-func (r *postgressRepository) PutOrder(ctx context.Context, o Order) error {
+func (r *postgressRepository) PutOrder(ctx context.Context, o Order) (err error) {
 	tx, err := r.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
@@ -55,7 +55,7 @@ func (r *postgressRepository) PutOrder(ctx context.Context, o Order) error {
 
 	stmt, _ := tx.PrepareContext(ctx, pq.CopyIn("order_products", "order_id", "product_id", "quantity"))
 	for _, p := range o.Products {
-		_, err := stmt.ExecContext(ctx, o.ID, p.ID, p.Quantity)
+		_, err = stmt.ExecContext(ctx, o.ID, p.ID, p.Quantity)
 		if err != nil {
 			return
 		}

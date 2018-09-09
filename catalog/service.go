@@ -29,7 +29,7 @@ func NewService(r Repository) Service {
 	return &catalogService{r}
 }
 
-func (s *catalogService) PostProduct(ctx interface{}, name, description string, price float64) (*Product, error) {
+func (s *catalogService) PostProduct(ctx context.Context, name, description string, price float64) (*Product, error) {
 	p := &Product{
 		Name:        name,
 		Description: description,
@@ -42,22 +42,22 @@ func (s *catalogService) PostProduct(ctx interface{}, name, description string, 
 	return p, nil
 }
 
-func (s *catalogService) GetProduct(ctx interface{}, id string) (*Product, error) {
+func (s *catalogService) GetProduct(ctx context.Context, id string) (*Product, error) {
 	return s.repository.GetProductByID(ctx, id)
 }
 
-func (s *catalogService) GetProducts(ctx interface{}, skip, take uint64) ([]Product, error) {
+func (s *catalogService) GetProducts(ctx context.Context, skip, take uint64) ([]Product, error) {
 	if take > 100 || (skip == 0 && take == 0) {
 		take = 100
 	}
 	return s.repository.ListProducts(ctx, skip, take)
 }
 
-func (s *catalogService) GetProductsByIDs(ctx interface{}, ids []string) ([]Product, error) {
+func (s *catalogService) GetProductsByIDs(ctx context.Context, ids []string) ([]Product, error) {
 	return s.repository.ListProductsWithIDs(ctx, ids)
 }
 
-func (s *catalogService) SearchProducts(ctx interface{}, query string, skip, take uint64) ([]Product, error) {
+func (s *catalogService) SearchProducts(ctx context.Context, query string, skip, take uint64) ([]Product, error) {
 	if take > 100 || (skip == 0 && take == 0) {
 		take = 100
 	}

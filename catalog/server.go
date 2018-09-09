@@ -62,7 +62,7 @@ func (s *grpcServe) GetProducts(ctx context.Context, r *pb.GetProductsRequest) (
 		return nil, err
 	}
 
-	products := []Product{}
+	products := []*pb.Product{}
 	for _, p := range res {
 		products = append(products,
 			&pb.Product{

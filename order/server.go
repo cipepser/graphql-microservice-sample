@@ -27,7 +27,7 @@ func ListenGRPC(s Service, accountURL, catalogURL string, port int) error {
 		return err
 	}
 
-	catalogClient, err := account.NewClient(catalogURL)
+	catalogClient, err := catalog.NewClient(catalogURL)
 	if err != nil {
 		accountClient.Close()
 		return err
@@ -106,7 +106,7 @@ func (s *grpcServer) PostOrder(ctx context2.Context, r *pb.PostOderRequest) (*pb
 		TotalPrice: order.TotalPrice,
 		Products:   []*pb.Order_OrderProduct{},
 	}
-	orderProto.createdAt, _ = order.CreatedAt.MarshalBinary()
+	orderProto.CreatedAt, _ = order.CreatedAt.MarshalBinary()
 	for _, p := range order.Products {
 		orderProto.Products = append(orderProto.Products, &pb.Order_OrderProduct{
 			Id:          p.ID,
@@ -156,7 +156,7 @@ func (s *grpcServer) GetOrdersForAccount(ctx context2.Context, r *pb.GetOrdersFo
 			TotalPrice: o.TotalPrice,
 			Products:   []*pb.Order_OrderProduct{},
 		}
-		op.createdAt, _ = o.CreatedAt.MarshalBinary()
+		op.CreatedAt, _ = o.CreatedAt.MarshalBinary()
 
 		// decorate orders with products
 		for _, product := range o.Products {
