@@ -4,13 +4,14 @@ require (
 	github.com/fortytw2/leaktest v1.2.0 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/protobuf v1.1.0
+	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/kelseyhightower/envconfig v1.3.0
 	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
 	github.com/mailru/easyjson v0.0.0-20180606163543-3fdea8d05856 // indirect
 	github.com/pkg/errors v0.8.0 // indirect
 	github.com/segmentio/ksuid v0.0.0-20180216234339-801bc4434082
 	github.com/tinrab/retry v1.0.0
-	github.com/vektah/gqlgen v0.0.0-20180623011226-a39c63a5ef9d // indirect
+	github.com/vektah/gqlgen v0.0.0-20180623011226-a39c63a5ef9d
 	golang.org/x/net v0.0.0-20180621144259-afe8f62b1d6b
 	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f // indirect
 	golang.org/x/text v0.3.0 // indirect
