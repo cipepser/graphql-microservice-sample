@@ -1,11 +1,12 @@
 package main
 
 import (
+	"log"
+	"time"
+
 	"github.com/cipepser/graphql-microservice-sample/account"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/tinrab/retry"
-	"log"
-	"time"
 )
 
 type Config struct {
@@ -20,8 +21,8 @@ func main() {
 	}
 
 	var r account.Repository
-	retry.ForeverSleep(2 * time.Second, func(_ int) (err error) {
-		r, err :=account.NewPostgresRepository(cfg.DatabaseURL)
+	retry.ForeverSleep(2*time.Second, func(_ int) (err error) {
+		r, err := account.NewPostgresRepository(cfg.DatabaseURL)
 		if err != nil {
 			log.Println(err)
 		}
@@ -30,6 +31,6 @@ func main() {
 	defer r.Close()
 
 	log.Println("Listening on port 8080...")
-	s :=account.NewService(r)
+	s := account.NewService(r)
 	log.Fatal(account.ListenGRPC(s, 8080))
 }
