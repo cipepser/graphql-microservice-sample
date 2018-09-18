@@ -1,6 +1,6 @@
 FROM golang:1.11.0-alpine3.8 AS build
 RUN apk --no-cache add gcc g++ make ca-certificates
-WORKDIR /go/src/github.com/cipepser/graphql-microservice-sample
+WORKDIR /go/src/github.com/cipepser/graphql-microservice-sample/account
 COPY vendor ../vendor
 COPY account ./
 RUN go build -o /go/bin/app ./cmd/account/main.go
