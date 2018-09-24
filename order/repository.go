@@ -47,7 +47,7 @@ func (r *postgressRepository) PutOrder(ctx context.Context, o Order) (err error)
 	}()
 
 	_, err = tx.ExecContext(ctx,
-		"INSERT INTO orders(id, create_at, account_id, total_price) VALUES($1, $2, $3, $4)",
+		"INSERT INTO orders(id, created_at, account_id, total_price) VALUES($1, $2, $3, $4)",
 		o.ID, o.CreatedAt, o.AccountID, o.TotalPrice)
 	if err != nil {
 		return
@@ -71,7 +71,7 @@ func (r *postgressRepository) PutOrder(ctx context.Context, o Order) (err error)
 
 func (r *postgressRepository) GetOrdersForAccount(ctx context.Context, accountID string) ([]Order, error) {
 	rows, err := r.db.QueryContext(ctx,
-		`SELECT o.id, create_at, o.account_id, o.total_price::money::numeric::float8,
+		`SELECT o.id, created_at, o.account_id, o.total_price::money::numeric::float8,
                        op.product_id, op.quantity
                 FROM orders o JOIN order_products op ON (o.id = op.order_id)
 				WHERE o.account_id = $1
