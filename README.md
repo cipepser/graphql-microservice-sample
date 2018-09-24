@@ -107,7 +107,19 @@ mutation {
 }
 ```
 
-TODO: accountsのクエリが空のせいかうまくいかない。これが原因じゃないかも。
+結果は以下のようになった。次に書くエラーで結構ハマったので長かった。
+
+{
+  "data": {
+    "createOrder": {
+      "id": "1Adt0viKFuqaWSm6KaZ92iME9UK",
+      "createdAt": "2018-09-24T05:48:04Z",
+      "totalPrice": 1535
+    }
+  }
+}
+
+#### accountsのクエリが空のせいかうまくいかない。
 
 ```json
 {
@@ -138,6 +150,79 @@ query {
 {
   "data": {
     "accounts": []
+  }
+}
+```
+
+`accounts`が空になっていたのは、`err == nil`とすべきところが`err != nil`となっていたため。
+
+#### `orders`が存在しないエラーの原因
+
+`order/up.sql`が実行されていなかったみたい。
+`docker-entrypoint-initdb.d/1.sql`としてコピーはできているし、`account`のほうはテーブルができていた。最初に丸括弧と中括弧を間違えてしまったから二度目以降が実行されていなかったのかもしれない。
+
+```sh
+❯ docker exec -it graphql-microservice-sample_order_db_1 bash
+
+> psql -U spidey
+> \d # テーブルを見る
+```
+
+
+### アカウント一覧を表示する
+
+```graphql
+query {
+  accounts {
+    id
+    name
+  }
+}
+```
+
+何度もアカウント作ってしまったので複数でてきている。
+
+```json
+{
+  "data": {
+    "accounts": [
+      {
+        "id": "1AKvPXMrcxQTTQhFhvMtOJzpCGf",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvPWtiYdSL7l6EcbW2NR5VyRi",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvPPB85ecNFz0wzdMQYLcTzU6",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvPLzLRt5GhEjyb534sYAo3hy",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvPdgCuqzwO0zzyDmT43cPRC8",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvP9ygwtkLzQR1YMl7e0BaVAn",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKvP1WrVYXDLo2YFY1iXpRa4m8",
+        "name": "Alice"
+      },
+      {
+        "id": "1AKrImOn6QwwL2zBtaA2PeFxIBr",
+        "name": "John"
+      },
+      {
+        "id": "1AKB1rQEeKtLjcpSXYq8mNE2vXK",
+        "name": "John"
+      }
+    ]
   }
 }
 ```
