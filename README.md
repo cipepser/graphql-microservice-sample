@@ -127,8 +127,8 @@ TODO: accountsのクエリが空のせいかうまくいかない。これが原
 
 ```graphql
 query {
-	accounts {
-		id
+  accounts {
+    id
     name
   }
 }
