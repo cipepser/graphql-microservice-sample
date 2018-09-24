@@ -54,7 +54,7 @@ func (r *postgresRepository) ListAccounts(ctx context.Context, skip uint64, take
 	accounts := []Account{}
 	for rows.Next() {
 		a := &Account{}
-		if err = rows.Scan(&a.ID, &a.Name); err != nil {
+		if err = rows.Scan(&a.ID, &a.Name); err == nil {
 			accounts = append(accounts, *a)
 		}
 	}
